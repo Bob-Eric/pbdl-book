@@ -6,6 +6,7 @@ dependencies = [
   "tqdm>=4.67.1",
   "pbdl",
   "matplotlib>=3.9.3",
+  "ipykernel>=6.29.5",
 ]
 name = "pbdl-book"
 version = "0.1.0"
