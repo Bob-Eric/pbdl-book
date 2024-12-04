@@ -1,13 +1,47 @@
 [project]
+dependencies = [
+  "tensorflow-intel>=2.18.0",
+  "tensorflow>=2.18.0",
+  "phiflow>=3.2.0",
+  "tqdm>=4.67.1",
+  "pbdl",
+  "matplotlib>=3.9.3",
+]
 name = "pbdl-book"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "ipykernel>=6.29.5",
-    "matplotlib>=3.9.3",
-    "numpy<2.0",
-    "tensorflow-intel>=2.18.0",
-    "tensorflow>=2.18.0",
+
+
+[project.optional-dependencies]
+cpu = ["torch>=2.5.1", "torchvision>=0.20.1", "torchaudio>=2.5"]
+cu124 = ["torch>=2.5.1", "torchvision>=0.20.1", "torchaudio>=2.5"]
+
+[tool.uv]
+conflicts = [[{ extra = "cpu" }, { extra = "cu124" }]]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
+  { index = "pytorch-cu124", extra = "cu124" },
 ]
+torchvision = [
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
+  { index = "pytorch-cu124", extra = "cu124" },
+]
+torchaudio = [
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
+  { index = "pytorch-cu124", extra = "cu124" },
+]
+pbdl = { git = "https://github.com/tum-pbs/pbdl-dataset", rev = "develop" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
